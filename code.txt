@@ -1,0 +1,174 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static public void MergeMethod(int[] numbers, int left, int mid, int right)
+        {
+            int[] temp = new int[25];
+            int i, left_end, num_elements, tmp_pos;
+            left_end = (mid - 1);
+            tmp_pos = left;
+            num_elements = (right - left + 1);
+            while ((left <= left_end) && (mid <= right))
+            {
+                if (numbers[left] <= numbers[mid])
+                    temp[tmp_pos++] = numbers[left++];
+                else
+                    temp[tmp_pos++] = numbers[mid++];
+            }
+            while (left <= left_end)
+                temp[tmp_pos++] = numbers[left++];
+            while (mid <= right)
+                temp[tmp_pos++] = numbers[mid++];
+            for (i = 0; i < num_elements; i++)
+            {
+                numbers[right] = temp[right];
+                right--;
+            }
+            foreach (var number in numbers)
+            {
+                Console.Write(number + "  ");
+            }
+            Console.WriteLine("\n\n");
+        }
+        static public void SortMethod(int[] numbers, int left, int right)
+        {
+            int mid;
+            if (right > left)
+            {
+                mid = (right + left) / 2;
+                SortMethod(numbers, left, mid);
+                SortMethod(numbers, (mid + 1), right);
+                MergeMethod(numbers, left, (mid + 1), right);
+            }
+        }
+        public static void SelectionSortDescending(int[] numbers)
+        {
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                int m = i;
+                int maxValue = numbers[i];
+
+                for (int j = i + 1; j < numbers.Length; j++)
+                {
+                    if (numbers[j].CompareTo(maxValue) > 0)
+                    {
+                        m = j;
+                        maxValue = numbers[j];
+                    }
+                }
+
+                int temp = numbers[i];
+                numbers[i] = numbers[m];
+                numbers[m] = temp;
+
+                foreach (var number in numbers)
+                {
+                    Console.Write(number + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        public static int[] SortArray(int[] numbers, int left, int right)
+        {
+            var i = left;
+            var j = right;
+            var pivot = numbers[left];
+
+            while (i <= j)
+            {
+                while (numbers[i] < pivot)
+                {
+                    i++;
+                }
+
+                while (numbers[j] > pivot)
+                {
+                    j--;
+                }
+
+                if (i <= j)
+                {
+                    int temp = numbers[i];
+                    numbers[i] = numbers[j];
+                    numbers[j] = temp;
+                    i++;
+                    j--;
+                }
+            }
+
+            if (left < j)
+                SortArray(numbers, left, j);
+
+            if (i < right)
+                SortArray(numbers, i, right);
+
+            return numbers;
+        }
+
+        public static int BinarySearch(int[] numbers, int n,int x)
+        {
+	        int left, right, mid; left=0; right=n-1;
+	        do{
+		        mid=(left+right)/2;
+		        if(numbers[mid]==x){
+			        return mid;
+		        }
+		        else if(numbers[mid]<x){
+			        left=mid+1;
+		        }
+		        else{
+			        right=mid-1;
+		        }
+	        }while(left<=right);
+	        return -1;
+        }
+
+        public static int Sum(int[] numbers)
+        {
+            int tong = 0;
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                tong += numbers[i];
+            }
+            return tong;
+        }
+        static void Main(string[] args)
+        {
+            var numbers = new[] {9, 3, 1, 7, 9, 2, 0};
+            int len = numbers.Length;
+
+
+            //2
+            //SortMethod(numbers, 0, len - 1);
+            //foreach (var number in numbers)
+            //{
+            //    Console.Write(number + "  ");
+            //}
+            //Console.WriteLine("\n\n");
+
+            //3
+            //int result = Sum(numbers);
+            //Console.WriteLine("sum is: " + result);
+            //Console.ReadKey();
+
+            //4
+            //SortArray(numbers, 0, len - 1);
+            //foreach (var number in numbers)
+            //{
+            //    Console.Write(number + "  ");
+            //}
+            //Console.WriteLine("\n\n");
+
+               
+
+
+        }
+    }
+}
